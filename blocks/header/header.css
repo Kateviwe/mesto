@@ -2,4 +2,11 @@
     max-width: 880px;
     margin: 0 auto;
     padding: 45px 0 40px 0;
+    box-sizing: border-box;
+}
+
+@media screen and (max-width: 320px) {
+    .header {
+        padding: 28px 0 42px 0;
+    }
 }

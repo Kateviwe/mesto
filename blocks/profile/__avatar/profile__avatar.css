@@ -3,3 +3,21 @@
     border-radius: 50%;
     margin-right: 30px;
 }
+
+@media screen and (max-width: 768px) {
+    .profile__avatar {
+        margin-right: 20px;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .profile__avatar {
+        margin-right: 15px;
+    }
+}
+
+@media screen and (max-width: 320px) {
+    .profile__avatar {
+        margin: 0 auto;
+    }
+}
