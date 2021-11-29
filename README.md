@@ -10,4 +10,4 @@ __В проекте применяются такие технологии:__
 * Применяются Flex и Grid Layout
 * Работа с DOM-элементами
 
-[__Ссылка на GitHub Pages__](...)
+[__Ссылка на GitHub Pages__](https://kateviwe.github.io/mesto/)
