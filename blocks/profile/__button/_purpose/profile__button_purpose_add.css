@@ -1,4 +1,4 @@
-.profile__button_add {
+.profile__button_purpose_add {
     border-width: 2px;
     border-radius: 2px;
     min-width: 150px;
@@ -9,20 +9,20 @@
 }
 
 @media screen and (max-width: 600px) {
-    .profile__button_add {
+    .profile__button_purpose_add {
         min-width: 80px;
     }
 }
 
 @media screen and (max-width: 485px) {
-    .profile__button_add {
-        min-width: 35px;
-        min-height: 35px;
+    .profile__button_purpose_add {
+        min-width: 30px;
+        min-height: 30px;
     }
 }
 
 @media screen and (max-width: 320px) {
-    .profile__button_add {
+    .profile__button_purpose_add {
         min-width: 282px;
         min-height: 50px;
         background-size: 16px 16px;
