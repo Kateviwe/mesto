@@ -8,23 +8,9 @@
     background-size: 22px 22px;
 }
 
-@media screen and (max-width: 600px) {
-    .profile__button_purpose_add {
-        min-width: 80px;
-    }
-}
-
-@media screen and (max-width: 485px) {
-    .profile__button_purpose_add {
-        min-width: 30px;
-        min-height: 30px;
-    }
-}
-
 @media screen and (max-width: 320px) {
     .profile__button_purpose_add {
         min-width: 282px;
-        min-height: 50px;
         background-size: 16px 16px;
         margin: 0 auto;
     }

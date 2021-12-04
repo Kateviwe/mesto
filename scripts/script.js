@@ -3,7 +3,7 @@ const editButton = document.querySelector('.profile__button_purpose_edit');
 const popUp = document.querySelector('.popup');
 const exitButton = popUp.querySelector('.popup__exit');
 //Поиск формы в DOM
-let formElement = popUp.querySelector('.popup__container');
+let formElement = popUp.querySelector('.popup__inner');
 //Поиск полей формы в DOM
 let nameInput = popUp.querySelector('.popup__text_purpose_name');
 let jobInput = popUp.querySelector('.popup__text_purpose_characteristic');

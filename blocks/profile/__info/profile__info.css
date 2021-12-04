@@ -4,12 +4,19 @@
     margin-right: auto;
 }
 
-@media screen and (max-width: 320px) {
+@media screen and (max-width: 425px) {
     .profile__info {
         flex-direction: column;
         text-align: center;
+        margin: 0 auto;
+        margin-bottom: 25px;
+    }
+}
+
+@media screen and (max-width: 320px) {
+    .profile__info {
         margin: 0;
         margin-left: 26px;
-        margin-bottom: 33px;
+        margin-bottom: 34px;
     }
 }
