@@ -12,6 +12,7 @@
 
 @media screen and (max-width: 320px) {
     .profile {
+        align-items: normal;
         margin-bottom: 36px;
     }
 }
