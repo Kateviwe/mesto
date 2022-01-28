@@ -23,55 +23,12 @@
                 </div>
                 <button class="profile__button profile__button_purpose_add" type="button"></button>
             </section>
-            <section class="photo-grid">
-                <ul class="photo-grid__container">
-                    <li class="photo-grid__item">
-                        <img class="photo-grid__image" src="./images/photo-grid-item-karachayevsk.jpg" alt="Вид на заброшенный монастырь.">
-                        <div class="photo-grid__sign">
-                            <h2 class="photo-grid__heading">Карачаевск</h2>
-                            <button class="photo-grid__like" type="button"></button>
-                        </div>
-                    </li>
-                    <li class="photo-grid__item">
-                        <img class="photo-grid__image" src="./images/photo-grid-item-mount-elbrus.jpg" alt="Вид на гору Эльбрус издалека.">
-                        <div class="photo-grid__sign">
-                            <h2 class="photo-grid__heading">Гора Эльбрус</h2>
-                            <button class="photo-grid__like" type="button"></button>
-                        </div>
-                    </li>
-                    <li class="photo-grid__item">
-                        <img class="photo-grid__image" src="./images/photo-grid-item-dombay.jpg" alt="Вид на заснеженные хребты гор.">
-                        <div class="photo-grid__sign">
-                            <h2 class="photo-grid__heading">Домбай</h2>
-                            <button class="photo-grid__like" type="button"></button>
-                        </div>
-                    </li>
-                    <li class="photo-grid__item">
-                        <img class="photo-grid__image" src="./images/photo-grid-item-karelia.jpg" alt="Лес, покрытый мхом.">
-                        <div class="photo-grid__sign">
-                            <h2 class="photo-grid__heading">Карелия</h2>
-                            <button class="photo-grid__like" type="button"></button>
-                        </div>
-                    </li>
-                    <li class="photo-grid__item">
-                        <img class="photo-grid__image" src="./images/photo-grid-item-kamchatka.jpg" alt="Вид на три вулкана из Авачинской бухты Тихого океана.">
-                        <div class="photo-grid__sign">
-                            <h2 class="photo-grid__heading">Камчатка</h2>
-                            <button class="photo-grid__like" type="button"></button>
-                        </div>
-                    </li>
-                    <li class="photo-grid__item">
-                        <img class="photo-grid__image" src="./images/photo-grid-item-altai.jpg" alt="Предгорье около озера.">
-                        <div class="photo-grid__sign">
-                            <h2 class="photo-grid__heading">Алтай</h2>
-                            <button class="photo-grid__like" type="button"></button>
-                        </div>
-                    </li>
-                </ul>
+            <section class="photogrid">
+                <ul class="photogrid__container"></ul>
             </section>
         </main>
         <footer class="footer">
-            <p class="footer__copyright">© 2020 Mesto Russia</p>
+            <p class="footer__copyright">© 2022 Mesto Russia</p>
         </footer>
         <div class="popup">
             <div class="popup__container">
@@ -86,7 +43,37 @@
                 </form>
             </div>
         </div>
+        <div class="popup popup_purpose_add">
+            <div class="popup__container">
+                <button class="popup__exit popup__exit_purpose_add" type="button"></button>
+                <form class="popup__inner popup__inner_purpose_add" name="popupadd">
+                    <h2 class="popup__heading">Новое место</h2>
+                    <fieldset class="popup__user-info">
+                        <input class="popup__text popup__text_purpose_title" type="text" name="title" placeholder="Название" required>
+                        <input class="popup__text popup__text_purpose_src" type="url" name="src" placeholder="Ссылка на картинку" required>
+                    </fieldset>
+                    <button class="popup__button" type="submit">Создать</button>
+                </form>
+            </div>
+        </div>
+        <div class="popup popup_purpose_view">
+            <div class="popup__bag">
+                <button class="popup__exit popup__exit_purpose_view" type="button"></button>
+                <img class="popup__image" src="./images/photo-grid-item-karachayevsk.jpg" alt="Карачаевск">
+                <h2 class="popup__title">Карачаевск</h2>
+            </div>
+        </div>
     </div>
+    <template id="card">
+        <li class="photogrid__item">
+            <button class="photogrid__urn" type="button"></button>
+            <img class="photogrid__image" src="./images/photo-grid-item-karachayevsk.jpg" alt="Карачаевск">
+            <div class="photogrid__sign">
+                <h2 class="photogrid__heading">Карачаевск</h2>
+                <button class="photogrid__like" type="button"></button>
+            </div>
+        </li>
+    </template>
     <script src="./scripts/script.js"></script>
 </body>
 </html>

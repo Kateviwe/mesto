@@ -22,14 +22,15 @@
 @import url(../blocks/profile/__button/_purpose/profile__button_purpose_add.css);
 
 /*photo-grid*/
-@import url(../blocks/photo-grid/photo-grid.css);
-@import url(../blocks/photo-grid/__container/photo-grid__container.css);
-@import url(../blocks/photo-grid/__item/photo-grid__item.css);
-@import url(../blocks/photo-grid/__image/photo-grid__image.css);
-@import url(../blocks/photo-grid/__sign/photo-grid__sign.css);
-@import url(../blocks/photo-grid/__heading/photo-grid__heading.css);
-@import url(../blocks/photo-grid/__like/photo-grid__like.css);
-@import url(../blocks/photo-grid/__like/_active/photo-grid__like_active.css);
+@import url(../blocks/photogrid/photogrid.css);
+@import url(../blocks/photogrid/__container/photogrid__container.css);
+@import url(../blocks/photogrid/__item/photogrid__item.css);
+@import url(../blocks/photogrid/__image/photogrid__image.css);
+@import url(../blocks/photogrid/__urn/photogrid__urn.css);
+@import url(../blocks/photogrid/__sign/photogrid__sign.css);
+@import url(../blocks/photogrid/__heading/photogrid__heading.css);
+@import url(../blocks/photogrid/__like/photogrid__like.css);
+@import url(../blocks/photogrid/__like/_active/photogrid__like_active.css);
 
 /*footer*/
 @import url(../blocks/footer/footer.css);
@@ -45,3 +46,6 @@
 @import url(../blocks/popup/__user-info/popup__user-info.css);
 @import url(../blocks/popup/__text/popup__text.css);
 @import url(../blocks/popup/__button/popup__button.css);
+@import url(../blocks/popup/__bag/popup__bag.css);
+@import url(../blocks/popup/__image/popup__image.css);
+@import url(../blocks/popup/__title/popup__title.css);

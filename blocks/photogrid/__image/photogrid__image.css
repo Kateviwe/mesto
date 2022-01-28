@@ -1,7 +1,8 @@
-.photo-grid__image {
+.photogrid__image {
     display: block;
     width: 282px;
     height: 282px;
     object-fit: cover;
     border-radius: 10px 10px 0 0;
+    cursor: pointer;
 }

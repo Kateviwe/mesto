@@ -1,4 +1,4 @@
-.photo-grid__container {
+.photogrid__container {
     max-width: 100%;
     display: grid;
     grid-template-columns: repeat(auto-fit, 282px);

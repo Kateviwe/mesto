@@ -1,10 +1,10 @@
-.photo-grid {
+.photogrid {
     max-width: 100%;
     margin-bottom: 67px;
 }
 
 @media screen and (max-width: 320px) {
-    .photo-grid {
+    .photogrid {
         margin-bottom: 48px;
     }
 }
