@@ -30,10 +30,10 @@
         <footer class="footer">
             <p class="footer__copyright">© 2022 Mesto Russia</p>
         </footer>
-        <div class="popup">
+        <div class="popup profile-popup">
             <div class="popup__container">
-                <button class="popup__exit" type="button"></button>
-                <form class="popup__inner" name="popup">
+                <button class="popup__exit popup__exit_purpose_edit" type="button"></button>
+                <form class="popup__inner popup__inner_purpose_edit" name="popup">
                     <h2 class="popup__heading">Редактировать профиль</h2>
                     <fieldset class="popup__user-info">
                         <input class="popup__text popup__text_purpose_name" type="text" name="name" placeholder="Имя" required>
@@ -43,7 +43,7 @@
                 </form>
             </div>
         </div>
-        <div class="popup popup_purpose_add">
+        <div class="popup adding-popup">
             <div class="popup__container">
                 <button class="popup__exit popup__exit_purpose_add" type="button"></button>
                 <form class="popup__inner popup__inner_purpose_add" name="popupadd">
@@ -56,7 +56,7 @@
                 </form>
             </div>
         </div>
-        <div class="popup popup_purpose_view">
+        <div class="popup viewing-popup">
             <div class="popup__bag">
                 <button class="popup__exit popup__exit_purpose_view" type="button"></button>
                 <img class="popup__image" src="./images/photo-grid-item-karachayevsk.jpg" alt="Карачаевск">

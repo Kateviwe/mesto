@@ -1,22 +1,22 @@
 //Поиск кнопок и попапа в DOM
-const editButton = document.querySelector('.profile__button_purpose_edit');
-const popUp = document.querySelector('.popup');
-const exitButton = popUp.querySelector('.popup__exit');
+const profileEditButton = document.querySelector('.profile__button_purpose_edit');
+const profilePopup = document.querySelector('.profile-popup');
+const profileExitButton = profilePopup.querySelector('.popup__exit_purpose_edit');
 //Поиск кнопок и второго попапа, который добавляет изображения в ленту, в DOM
-const addButton = document.querySelector('.profile__button_purpose_add');
-const popUpAdd = document.querySelector('.popup_purpose_add');
-const exitButtonAdd = popUpAdd.querySelector('.popup__exit_purpose_add');
+const profileAddButton = document.querySelector('.profile__button_purpose_add');
+const addingPopup = document.querySelector('.adding-popup');
+const addingExitButton = addingPopup.querySelector('.popup__exit_purpose_add');
 //Поиск кнопки и попапа, который открывает просмотр карточек
-const popUpView = document.querySelector('.popup_purpose_view');
-const exitButtonView = popUpView.querySelector('.popup__exit_purpose_view');
+const viewingPopup = document.querySelector('.viewing-popup');
+const viewingExitButton = viewingPopup.querySelector('.popup__exit_purpose_view');
 //Поиск форм в DOM
-const formElement = popUp.querySelector('.popup__inner');
-const formElementAdd = popUpAdd.querySelector('.popup__inner_purpose_add');
+const profileForm = profilePopup.querySelector('.popup__inner_purpose_edit');
+const addingForm = addingPopup.querySelector('.popup__inner_purpose_add');
 //Поиск полей форм в DOM
-const nameInput = popUp.querySelector('.popup__text_purpose_name');
-const jobInput = popUp.querySelector('.popup__text_purpose_characteristic');
-const titleInput = popUpAdd.querySelector('.popup__text_purpose_title');
-const srcInput = popUpAdd.querySelector('.popup__text_purpose_src');
+const nameInput = profilePopup.querySelector('.popup__text_purpose_name');
+const jobInput = profilePopup.querySelector('.popup__text_purpose_characteristic');
+const titleInput = addingPopup.querySelector('.popup__text_purpose_title');
+const srcInput = addingPopup.querySelector('.popup__text_purpose_src');
 //Поиск в профиле имени и характеристики пользователя в DOM
 const person = document.querySelector('.profile__name');
 const characteristic = document.querySelector('.profile__characteristic');
@@ -26,6 +26,9 @@ const containerCard = document.querySelector('.photogrid__container');
 const cardTemplate = document.querySelector('#card').content;
 const cardItem = cardTemplate.querySelector('.photogrid__item');
 const imageViewCard = document.querySelector('.photogrid__image');
+
+const titleViewCard = viewingPopup.querySelector('.popup__title');
+const srcViewCard = viewingPopup.querySelector('.popup__image');
 
 const initialCards = [
     {
@@ -60,39 +63,24 @@ const initialCards = [
     }
   ];
 
-//При открытии модального окна данные из профиля записываются в форму
-function openPopup() {
-    popUp.classList.add('popup_opened');
-    nameInput.value = person.textContent;
-    jobInput.value = characteristic.textContent;
+//Открытие модального окна
+function openPopup(popup) {
+    popup.classList.add('popup_opened');
 }
 
-//Функция открытия модального окна, которое позволяет добавлять изображения в ленту
-function openPopupAdd() {
-    popUpAdd.classList.add('popup_opened');
-    titleInput.value = '';
-    srcInput.value = '';
-}
-
-//Закрытие модальных окн
-function closePopup() {
-  popUp.classList.remove('popup_opened');
-}
-function closePopupAdd() {
-  popUpAdd.classList.remove('popup_opened');
-}
-function closePopupView() {
-  popUpView.classList.remove('popup_opened');
+//Закрытие модального окна
+function closePopup (popup) {
+  popup.classList.remove('popup_opened');
 }
 
 //При нажатии кнопки 'Сохранить' данные из формы записываются в профиль и модальное окно закрывается
-function formSubmitHandler (evt) {
+function handleProfileFormSubmit (evt) {
     evt.preventDefault();
 
     person.textContent = nameInput.value;
     characteristic.textContent = jobInput.value;
 
-    closePopup();
+    closePopup(profilePopup);
 }
 
 //Функция проставления лайков
@@ -125,30 +113,29 @@ function createCard(nameNewCard, linkNewCard) {
 
   //Отслеживаем клик по изображению карточек
   imageCard.addEventListener('click', evt => {
-    popUpView.classList.add('popup_opened');
+    openPopup(viewingPopup);
 
-    const titleViewCard = popUpView.querySelector('.popup__title');
-    const imageViewCard = popUpView.querySelector('.popup__image');
     const goal = evt.target;
 
     titleViewCard.textContent = goal.alt;
-    imageViewCard.src = goal.src;
+    srcViewCard.src = goal.src;
+    srcViewCard.alt = goal.alt;
   });
-
-  exitButtonView.addEventListener('click', closePopupView);
 
   return newCardElement;
 }
 
 //При нажатии кнопки 'Создать' добавляется новая карточка в начало ленты и модальное окно закрывается
-function formSubmitHandlerAdd (evt) {
+function handleAddingFormSubmit (evt) {
   evt.preventDefault();
 
   const newCard = createCard(titleInput.value, srcInput.value);
   //Добавляем новую карточку
   containerCard.prepend(newCard);
+  //Очищаем форму после добавления карточки в ленту
+  addingForm.reset();
 
-  closePopupAdd();
+  closePopup(addingPopup);
 }
 
 //Добавление 6 исходных карточек
@@ -158,9 +145,18 @@ initialCards.forEach(item => {
   });
 
 //Добавление слушателей событий
-editButton.addEventListener('click', openPopup);
-exitButton.addEventListener('click', closePopup);
-addButton.addEventListener('click', openPopupAdd);
-exitButtonAdd.addEventListener('click', closePopupAdd);
-formElement.addEventListener('submit', formSubmitHandler);
-formElementAdd.addEventListener('submit', formSubmitHandlerAdd);
+profileEditButton.addEventListener('click', () => {
+  openPopup(profilePopup);
+  nameInput.value = person.textContent;
+  jobInput.value = characteristic.textContent;
+});
+profileAddButton.addEventListener('click', () => {
+  openPopup(addingPopup);
+});
+
+profileExitButton.addEventListener('click', () => closePopup(profilePopup));
+addingExitButton.addEventListener('click', () => closePopup(addingPopup));
+viewingExitButton.addEventListener('click', () => closePopup(viewingPopup));
+
+profileForm.addEventListener('submit', handleProfileFormSubmit);
+addingForm.addEventListener('submit', handleAddingFormSubmit);
