@@ -7,14 +7,14 @@
     font-weight: 400;
     margin: 0;
     padding: 0;
-    margin-bottom: 30px;
+    margin-bottom: 5px;
     padding-bottom: 13px;
 }
 
 @media screen and (max-width: 320px) {
     .popup__text {
         width: calc(238*100%/282);
-        margin-bottom: 29px;
+        /* margin-bottom: 29px; */
         padding-bottom: 9px;
     }
 }

@@ -33,11 +33,13 @@
         <div class="popup profile-popup">
             <div class="popup__container">
                 <button class="popup__exit popup__exit_purpose_edit" type="button"></button>
-                <form class="popup__inner popup__inner_purpose_edit" name="popup">
+                <form class="popup__inner popup__inner_purpose_edit" name="popup" novalidate>
                     <h2 class="popup__heading">Редактировать профиль</h2>
                     <fieldset class="popup__user-info">
-                        <input class="popup__text popup__text_purpose_name" type="text" name="name" placeholder="Имя" required>
-                        <input class="popup__text popup__text_purpose_characteristic" type="text" name="characteristic" placeholder="Характеристика" required>
+                        <input id="name-input" class="popup__text popup__text_purpose_name" type="text" name="name" placeholder="Имя" required minlength="2" maxlength="40">
+                        <span class="popup__text-error name-input-error">Необходимо заполнить данное поле.</span>
+                        <input id="characteristic-input" class="popup__text popup__text_purpose_characteristic" type="text" name="characteristic" placeholder="Характеристика" required minlength="2" maxlength="200">
+                        <span class="popup__text-error characteristic-input-error">Необходимо заполнить данное поле.</span>
                     </fieldset>
                     <button class="popup__button" type="submit">Сохранить</button>
                 </form>
@@ -75,5 +77,6 @@
         </li>
     </template>
     <script src="./scripts/script.js"></script>
+    <script src="./scripts/validate.js"></script>
 </body>
 </html>
