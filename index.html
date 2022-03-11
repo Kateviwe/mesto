@@ -41,7 +41,7 @@
                         <input id="characteristic-input" class="popup__text popup__text_purpose_characteristic" type="text" name="characteristic" placeholder="Характеристика" required minlength="2" maxlength="200">
                         <span class="popup__text-error characteristic-input-error">Необходимо заполнить данное поле.</span>
                     </fieldset>
-                    <button class="popup__button" type="submit">Сохранить</button>
+                    <button class="popup__button popup__button_purpose_edit" type="submit">Сохранить</button>
                 </form>
                 <div class="popup__overlay popup__overlay_purpose_edit"></div> 
             </div>
@@ -57,7 +57,7 @@
                         <input id="src-input" class="popup__text popup__text_purpose_src" type="url" name="src" placeholder="Ссылка на картинку" required>
                         <span class="popup__text-error src-input-error">Необходимо заполнить данное поле.</span>
                     </fieldset>
-                    <button class="popup__button" type="submit">Создать</button>
+                    <button class="popup__button popup__button_purpose_add" type="submit">Создать</button>
                 </form>
                 <div class="popup__overlay popup__overlay_purpose_add"></div> 
             </div>
@@ -81,7 +81,7 @@
             </div>
         </li>
     </template>
-    <script src="./scripts/script.js"></script>
+    <script type="module" src="./scripts/script.js"></script>
     <script src="./scripts/validate.js"></script>
 </body>
 </html>

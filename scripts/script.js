@@ -1,3 +1,7 @@
+//Импортируем исходный набор карточек
+import initialCards from './cards.js';
+
+const ESC_CODE = 'Escape';
 //Поиск кнопок и попапа в DOM
 const profileEditButton = document.querySelector('.profile__button_purpose_edit');
 const profilePopup = document.querySelector('.profile-popup');
@@ -30,88 +34,47 @@ const imageViewCard = document.querySelector('.photogrid__image');
 const titleViewCard = viewingPopup.querySelector('.popup__title');
 const srcViewCard = viewingPopup.querySelector('.popup__image');
 
+const addingCreateButton = addingPopup.querySelector('.popup__button_purpose_add');
+
 //Поиск подложек (overlay) в DOM
 const profileOverlay = document.querySelector('.popup__overlay_purpose_edit');
 const addingOverlay = document.querySelector('.popup__overlay_purpose_add');
 const viewingOverlay = document.querySelector('.popup__overlay_purpose_view');
 
-const initialCards = [
-    {
-      name: 'Тулиновка',
-      link: 'https://images.unsplash.com/photo-1516128935666-9742cf27e24c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1335&q=80',
-      alt: 'Тулиновка'
-    },
-    {
-      name: 'Камчатка',
-      link: 'https://images.unsplash.com/photo-1560255492-e69e132f19fe?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=871&q=80',
-      alt: 'Камчатка'
-    },
-    {
-      name: 'Эльбрус',
-      link: 'https://images.unsplash.com/photo-1603736115415-fd1f3473291f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80',
-      alt: 'Эльбрус'
-    },
-    {
-      name: 'Алтай',
-      link: 'https://images.unsplash.com/photo-1628534795682-94f707b4ce9e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=435&q=80',
-      alt: 'Алтай'
-    },
-    {
-      name: 'Домбай',
-      link: 'https://images.unsplash.com/photo-1637579176819-36455abf2e97?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=435&q=80',
-      alt: 'Домбай'
-    },
-    {
-      name: 'Мурманск',
-      link: 'https://images.unsplash.com/photo-1602505121461-963a812e0eae?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=435&q=80',
-      alt: 'Мурманск'
-    }
-  ];
+//Функция закрытия попапа клавишей Esc
+function closeByEsc (evt) {
+  if (evt.key === ESC_CODE) {
+    const openedPopup = document.querySelector('.popup_opened');
+    closePopup(openedPopup);
+  }
+}
 
-//Открытие модального окна
+  //Открытие модального окна
 function openPopup(popup) {
-    popup.classList.add('popup_opened');
+  popup.classList.add('popup_opened');
+  document.addEventListener('keydown', closeByEsc);
 }
 
 //Закрытие модального окна
 function closePopup (popup) {
   popup.classList.remove('popup_opened');
+  document.removeEventListener('keydown', closeByEsc);
 }
 
 //При нажатии кнопки 'Сохранить' данные из формы записываются в профиль и модальное окно закрывается
 function handleProfileFormSubmit (evt) {
-    evt.preventDefault();
+  evt.preventDefault();
 
-    person.textContent = nameInput.value;
-    characteristic.textContent = jobInput.value;
+  person.textContent = nameInput.value;
+  characteristic.textContent = jobInput.value;
 
-    closePopup(profilePopup);
-    document.removeEventListener('keydown', profilePressEsc);
+  closePopup(profilePopup);
 }
 
 //Функция проставления лайков
 function likePhoto(evt) {
   evt.target.classList.toggle('photogrid__like_active');
 }
-//Проверка нажатия клавиши Esc
-const profilePressEsc = (evt) => {
-  if (evt.key === 'Escape') {
-    closePopup(profilePopup);
-    document.removeEventListener('keydown', profilePressEsc);
-  }
-};
-const addingPressEsc = (evt) => {
-  if (evt.key === 'Escape') {
-    closePopup(addingPopup);
-    document.removeEventListener('keydown', addingPressEsc);
-  }
-};
-const viewingPressEsc = (evt) => {
-  if (evt.key === 'Escape') {
-    closePopup(viewingPopup);
-    document.removeEventListener('keydown', viewingPressEsc);
-  }
-};
 
 //Функция создания карточки
 function createCard(nameNewCard, linkNewCard) {
@@ -139,14 +102,6 @@ function createCard(nameNewCard, linkNewCard) {
   //Отслеживаем клик по изображению карточек
   imageCard.addEventListener('click', evt => {
     openPopup(viewingPopup);
-    //Проверка нажата ли клавиша Esc
-    document.addEventListener('keydown', viewingPressEsc);
-
-    //Реализация закрытия попапа по нажатию на оверлей (вне формы)
-    viewingOverlay.addEventListener('click', () => {
-      closePopup(viewingPopup);
-      document.removeEventListener('keydown', viewingPressEsc);
-    });
 
     const goal = evt.target;
 
@@ -167,10 +122,10 @@ function handleAddingFormSubmit (evt) {
   containerCard.prepend(newCard);
   //Очищаем форму после добавления карточки в ленту
   addingForm.reset();
+  addingCreateButton.classList.add('popup__button_disabled');
+  addingCreateButton.setAttribute('disabled', 'true');
 
   closePopup(addingPopup);
-  document.removeEventListener('keydown', addingPressEsc);
-  
 }
 
 //Добавление 6 исходных карточек
@@ -182,42 +137,22 @@ initialCards.forEach(item => {
 //Добавление слушателей событий
 profileEditButton.addEventListener('click', () => {
   openPopup(profilePopup);
-  //Проверка нажата ли клавиша Esc
-  document.addEventListener('keydown', profilePressEsc);
-
-  //Реализация закрытия попапа по нажатию на оверлей (вне формы)
-  profileOverlay.addEventListener('click', () => {
-    closePopup(profilePopup);
-    document.removeEventListener('keydown', profilePressEsc);
-  });
 
   nameInput.value = person.textContent;
   jobInput.value = characteristic.textContent;
 });
 profileAddButton.addEventListener('click', () => {
   openPopup(addingPopup);
-  //Проверка нажата ли клавиша Esc
-  document.addEventListener('keydown', addingPressEsc);
-  
-  //Реализация закрытия попапа по нажатию на оверлей (вне формы)
-  addingOverlay.addEventListener('click', () => {
-    closePopup(addingPopup);
-    document.removeEventListener('keydown', addingPressEsc);
-  });
 });
 
-profileExitButton.addEventListener('click', () => {
-  closePopup(profilePopup);
-  document.removeEventListener('keydown', profilePressEsc);
-});
-addingExitButton.addEventListener('click', () => {
-  closePopup(addingPopup);
-  document.removeEventListener('keydown', addingPressEsc);
-});
-viewingExitButton.addEventListener('click', () => {
-  closePopup(viewingPopup);
-  document.removeEventListener('keydown', viewingPressEsc);
-});
+profileExitButton.addEventListener('click', () => closePopup(profilePopup));
+addingExitButton.addEventListener('click', () => closePopup(addingPopup));
+viewingExitButton.addEventListener('click', () => closePopup(viewingPopup));
 
 profileForm.addEventListener('submit', handleProfileFormSubmit);
 addingForm.addEventListener('submit', handleAddingFormSubmit);
+
+//Слушатель закрытия попапа по нажатию на оверлей (вне формы)
+profileOverlay.addEventListener('click', () => closePopup(profilePopup));
+addingOverlay.addEventListener('click', () => closePopup(addingPopup));
+viewingOverlay.addEventListener('click', () => closePopup(viewingPopup));
