@@ -1,5 +1,5 @@
 //Импортируем исходный набор карточек
-import initialCards from './cards.js';
+import {initialCards} from './cards.js';
 
 const ESC_CODE = 'Escape';
 //Поиск кнопок и попапа в DOM
