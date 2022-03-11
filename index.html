@@ -43,19 +43,23 @@
                     </fieldset>
                     <button class="popup__button" type="submit">Сохранить</button>
                 </form>
+                <div class="popup__overlay popup__overlay_purpose_edit"></div> 
             </div>
         </div>
         <div class="popup adding-popup">
             <div class="popup__container">
                 <button class="popup__exit popup__exit_purpose_add" type="button"></button>
-                <form class="popup__inner popup__inner_purpose_add" name="popupadd">
+                <form class="popup__inner popup__inner_purpose_add" name="popupadd" novalidate>
                     <h2 class="popup__heading">Новое место</h2>
                     <fieldset class="popup__user-info">
-                        <input class="popup__text popup__text_purpose_title" type="text" name="title" placeholder="Название" required>
-                        <input class="popup__text popup__text_purpose_src" type="url" name="src" placeholder="Ссылка на картинку" required>
+                        <input id="title-input" class="popup__text popup__text_purpose_title" type="text" name="title" placeholder="Название" required minlength="2" maxlength="30">
+                        <span class="popup__text-error title-input-error">Необходимо заполнить данное поле.</span>
+                        <input id="src-input" class="popup__text popup__text_purpose_src" type="url" name="src" placeholder="Ссылка на картинку" required>
+                        <span class="popup__text-error src-input-error">Необходимо заполнить данное поле.</span>
                     </fieldset>
                     <button class="popup__button" type="submit">Создать</button>
                 </form>
+                <div class="popup__overlay popup__overlay_purpose_add"></div> 
             </div>
         </div>
         <div class="popup viewing-popup">
@@ -64,6 +68,7 @@
                 <img class="popup__image" src="./images/photo-grid-item-karachayevsk.jpg" alt="Карачаевск">
                 <h2 class="popup__title">Карачаевск</h2>
             </div>
+            <div class="popup__overlay popup__overlay_purpose_view"></div> 
         </div>
     </div>
     <template id="card">

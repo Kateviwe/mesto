@@ -42,19 +42,21 @@ const isValid = (formElement, inputElement, someObject) => {
 const hasInvalidInput = (inputList) => {
     return inputList.some((inputElement) => {
         return !inputElement.validity.valid;
-    });
+    })
 };
 //Переключение состояния кнопки
 const toggleButtonState = (inputList, buttonElement, someObject) => {
     if (hasInvalidInput(inputList)) {
         buttonElement.classList.add(someObject.inactiveButtonClass);
+        buttonElement.setAttribute('disabled', 'true');
     } else {
         buttonElement.classList.remove(someObject.inactiveButtonClass);
+        buttonElement.removeAttribute('disabled');
     }
 };
 
 const setEventListeners = (formElement, someObject) => {
-    //Создание массива из всех инпутов формы
+    //Создание массива из всех полей формы
     const inputList = Array.from(formElement.querySelectorAll(someObject.inputSelector));
     const buttonElement = formElement.querySelector(someObject.submitButtonSelector);
     toggleButtonState(inputList, buttonElement, someObject);

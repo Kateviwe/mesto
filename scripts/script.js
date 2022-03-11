@@ -30,6 +30,11 @@ const imageViewCard = document.querySelector('.photogrid__image');
 const titleViewCard = viewingPopup.querySelector('.popup__title');
 const srcViewCard = viewingPopup.querySelector('.popup__image');
 
+//Поиск подложек (overlay) в DOM
+const profileOverlay = document.querySelector('.popup__overlay_purpose_edit');
+const addingOverlay = document.querySelector('.popup__overlay_purpose_add');
+const viewingOverlay = document.querySelector('.popup__overlay_purpose_view');
+
 const initialCards = [
     {
       name: 'Тулиновка',
@@ -81,12 +86,32 @@ function handleProfileFormSubmit (evt) {
     characteristic.textContent = jobInput.value;
 
     closePopup(profilePopup);
+    document.removeEventListener('keydown', profilePressEsc);
 }
 
 //Функция проставления лайков
 function likePhoto(evt) {
   evt.target.classList.toggle('photogrid__like_active');
 }
+//Проверка нажатия клавиши Esc
+const profilePressEsc = (evt) => {
+  if (evt.key === 'Escape') {
+    closePopup(profilePopup);
+    document.removeEventListener('keydown', profilePressEsc);
+  }
+};
+const addingPressEsc = (evt) => {
+  if (evt.key === 'Escape') {
+    closePopup(addingPopup);
+    document.removeEventListener('keydown', addingPressEsc);
+  }
+};
+const viewingPressEsc = (evt) => {
+  if (evt.key === 'Escape') {
+    closePopup(viewingPopup);
+    document.removeEventListener('keydown', viewingPressEsc);
+  }
+};
 
 //Функция создания карточки
 function createCard(nameNewCard, linkNewCard) {
@@ -114,6 +139,14 @@ function createCard(nameNewCard, linkNewCard) {
   //Отслеживаем клик по изображению карточек
   imageCard.addEventListener('click', evt => {
     openPopup(viewingPopup);
+    //Проверка нажата ли клавиша Esc
+    document.addEventListener('keydown', viewingPressEsc);
+
+    //Реализация закрытия попапа по нажатию на оверлей (вне формы)
+    viewingOverlay.addEventListener('click', () => {
+      closePopup(viewingPopup);
+      document.removeEventListener('keydown', viewingPressEsc);
+    });
 
     const goal = evt.target;
 
@@ -136,6 +169,8 @@ function handleAddingFormSubmit (evt) {
   addingForm.reset();
 
   closePopup(addingPopup);
+  document.removeEventListener('keydown', addingPressEsc);
+  
 }
 
 //Добавление 6 исходных карточек
@@ -147,16 +182,42 @@ initialCards.forEach(item => {
 //Добавление слушателей событий
 profileEditButton.addEventListener('click', () => {
   openPopup(profilePopup);
+  //Проверка нажата ли клавиша Esc
+  document.addEventListener('keydown', profilePressEsc);
+
+  //Реализация закрытия попапа по нажатию на оверлей (вне формы)
+  profileOverlay.addEventListener('click', () => {
+    closePopup(profilePopup);
+    document.removeEventListener('keydown', profilePressEsc);
+  });
+
   nameInput.value = person.textContent;
   jobInput.value = characteristic.textContent;
 });
 profileAddButton.addEventListener('click', () => {
   openPopup(addingPopup);
+  //Проверка нажата ли клавиша Esc
+  document.addEventListener('keydown', addingPressEsc);
+  
+  //Реализация закрытия попапа по нажатию на оверлей (вне формы)
+  addingOverlay.addEventListener('click', () => {
+    closePopup(addingPopup);
+    document.removeEventListener('keydown', addingPressEsc);
+  });
 });
 
-profileExitButton.addEventListener('click', () => closePopup(profilePopup));
-addingExitButton.addEventListener('click', () => closePopup(addingPopup));
-viewingExitButton.addEventListener('click', () => closePopup(viewingPopup));
+profileExitButton.addEventListener('click', () => {
+  closePopup(profilePopup);
+  document.removeEventListener('keydown', profilePressEsc);
+});
+addingExitButton.addEventListener('click', () => {
+  closePopup(addingPopup);
+  document.removeEventListener('keydown', addingPressEsc);
+});
+viewingExitButton.addEventListener('click', () => {
+  closePopup(viewingPopup);
+  document.removeEventListener('keydown', viewingPressEsc);
+});
 
 profileForm.addEventListener('submit', handleProfileFormSubmit);
 addingForm.addEventListener('submit', handleAddingFormSubmit);
