@@ -1,4 +1,4 @@
-import {openPopup} from './script.js';
+import { viewingPopup, titleViewCard, srcViewCard, openPopup } from './script.js';
 
 export class Card {
     constructor(nameNewCard, linkNewCard, cardSelector) {
@@ -24,54 +24,37 @@ export class Card {
         evt.target.classList.toggle('photogrid__like_active');
     }
 
-    //Найдем кнопки лайков среди картинок
-    _handleLikeCardClick() {
-        const likeCard = this._element.querySelector('.photogrid__like');
-        likeCard.addEventListener('click', this._likePhoto);
-    }
-    //Найдем кнопки удаления картинок
-    _handleDeleteCardClick() {
-        const urnCard = this._element.querySelector('.photogrid__urn');
-        urnCard.addEventListener('click', () => {
-        const parentClickUrn = this._element.closest('.photogrid__item');
-        parentClickUrn.remove();
-        });
-    }
-
-    //Отслеживаем клик по изображению карточек и записываем данные из карточки в эту же карточку в 
-    //режиме просмотра (viewing)
-    _handleClickOnCard() {
-        
-        const viewingPopup = document.querySelector('.viewing-popup');
-        const imageCard = this._element.querySelector('.photogrid__image');
-
-        imageCard.addEventListener('click', evt => {
-        openPopup(viewingPopup);
-        const titleViewCard = viewingPopup.querySelector('.popup__title');
-        const srcViewCard = viewingPopup.querySelector('.popup__image');
-    
-        const goal = evt.target;
-    
-        titleViewCard.textContent = goal.alt;
-        srcViewCard.src = goal.src;
-        srcViewCard.alt = goal.alt;
-        });
-    }
-
     //Функция создания карточки
     createCard() {
         this._element = this._getTemplate();
-        //Поиск ссылки на изображение и заголовка карточки в DOM
-        const titleCard = this._element.querySelector('.photogrid__heading');
-        const imageCard = this._element.querySelector('.photogrid__image');
+        this._urnCard = this._element.querySelector('.photogrid__urn');
+        this._likeCard = this._element.querySelector('.photogrid__like');
+        //Запись ссылки на изображение и заголовка карточки в DOM
+        this._titleCard = this._element.querySelector('.photogrid__heading');
+        this._imageCard = this._element.querySelector('.photogrid__image');
+
         //Наполняем шаблон
-        titleCard.textContent = this._name;
-        imageCard.src = this._link;
-        imageCard.alt = this._alt;
-    
-        this._handleLikeCardClick();
-        this._handleDeleteCardClick();
-        this._handleClickOnCard();
+        this._titleCard.textContent = this._name;
+        this._imageCard.src = this._link;
+        this._imageCard.alt = this._alt;
+
+        //Навешиваем слушатели событий
+        //Слушатель клика по иконке лайка/сердечка на карточке
+        this._likeCard.addEventListener('click', this._likePhoto);
+        //Слушатель клика по иконке урны на карточке
+        const urn = this._urnCard.addEventListener('click', () => {
+            this._element.remove(); //Удаляет только разметку
+            this._element = null; //Зануляем текущий объект (элемент с данными, слушателями) => освобождается память
+            this._element.removeEventListener('click', urn);
+        });
+        //Отслеживаем клик по изображению карточек и записываем данные из карточки в эту же карточку в 
+        //режиме просмотра (viewing)
+        this._imageCard.addEventListener('click', () => {       
+            titleViewCard.textContent = this._name;
+            srcViewCard.src = this._link;
+            srcViewCard.alt = this._alt;
+            openPopup(viewingPopup);
+        });
     
         return this._element;
     }

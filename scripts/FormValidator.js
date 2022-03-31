@@ -1,4 +1,6 @@
-export class _FormValidator {
+import { addingCreateButton } from './script.js';
+
+export class FormValidator {
     constructor(someObject, formElement) {
         this._inputSelector = someObject.inputSelector;
         this._submitButtonSelector = someObject.submitButtonSelector;
@@ -74,7 +76,7 @@ export class _FormValidator {
         });
     }
 
-    //Проводим полноценную валидацию
+    //Проводим полноценную валидацию (публичный метод)
     enableValidation() {    
         //На каждой форме вызываем проверку всех её инпутов
         this._formElement.addEventListener('submit', (evt) => {
@@ -82,5 +84,11 @@ export class _FormValidator {
         });
 
         this._setEventListeners();
+    }
+
+    //Публичный метод блокировки кнопки отправки
+    blockButtonSubmit() {    
+        addingCreateButton.classList.add(this._inactiveButtonClass);
+        addingCreateButton.setAttribute('disabled', 'true');
     }
 }
