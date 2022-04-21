@@ -1,11 +1,11 @@
-import { viewingPopup, titleViewCard, srcViewCard, openPopup } from './script.js';
-
 export class Card {
-    constructor(nameNewCard, linkNewCard, cardSelector) {
-        this._name = nameNewCard;
-        this._link = linkNewCard;
-        this._alt = nameNewCard;
+    constructor({ name, link, handleCardClick }, cardSelector ) {
+        this._name = name;
+        this._link = link;
+        this._alt = name;
         this._cardSelector = cardSelector;
+        //Функция, которая должна открывать попап с картинкой при клике на карточку
+        this._handleCardClick = handleCardClick;
     }
 
     //Методы класса
@@ -50,10 +50,11 @@ export class Card {
         //Отслеживаем клик по изображению карточек и записываем данные из карточки в эту же карточку в 
         //режиме просмотра (viewing)
         this._imageCard.addEventListener('click', () => {       
-            titleViewCard.textContent = this._name;
-            srcViewCard.src = this._link;
-            srcViewCard.alt = this._alt;
-            openPopup(viewingPopup);
+            this._handleCardClick({
+                name: this._name,
+                link: this._link,
+                alt: this._alt
+            });
         });
     
         return this._element;
