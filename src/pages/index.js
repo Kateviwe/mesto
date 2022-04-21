@@ -1,16 +1,19 @@
+//Импорт главного CSS-файла
+import './index.css';
+
 //Импорт исходного набора карточек
-import { initialCards } from './initialCards.js';
+import { initialCards } from '../components/initialCards.js';
 //Импорт класса создания карточек Card
-import { Card } from './Card.js';
+import { Card } from '../components/Card.js';
 //Импорт класса валидации FormValidator
-import { FormValidator } from './FormValidator.js';
+import { FormValidator } from '../components/FormValidator.js';
 //Импорт класса Section, который отвечает за отрисовку элементов на странице
-import { Section } from './Section.js';
+import { Section } from '../components/Section.js';
 //Импорты классов, которые наследуют от Popup
-import { PopupWithImage } from './PopupWithImage.js';
-import { PopupWithForm } from './PopupWithForm.js';
+import { PopupWithImage } from '../components/PopupWithImage.js';
+import { PopupWithForm } from '../components/PopupWithForm.js';
 //Импорт класса UserInfo, который отвечает за управление отображением информации о пользователе на странице
-import { UserInfo } from './UserInfo.js';
+import { UserInfo } from '../components/UserInfo.js';
 
 //Создание объекта настроек для проведения валидации
 const object = {

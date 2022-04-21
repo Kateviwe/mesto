@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Место</title>
-  <link rel="stylesheet" href="./pages/index.css">
 </head>
 <body class="body">
     <div class="page">
@@ -13,7 +12,7 @@
         </header>
         <main class="content">
             <section class="profile">
-                <img class="profile__avatar" src="./images/profile-avatar.jpg" alt="Аватар профиля пользователя.">
+                <img class="profile__avatar" src="<%=require('./images/profile-avatar.jpg')%>" alt="Аватар профиля пользователя.">
                 <div class="profile__info">
                     <div class="profile__local-info">
                         <h1 class="profile__name">Жак-Ив Кусто</h1>
@@ -65,7 +64,7 @@
         <div class="popup viewing-popup">
             <div class="popup__bag">
                 <button class="popup__exit popup__exit_purpose_view" type="button"></button>
-                <img class="popup__image" src="./images/photo-grid-item-karachayevsk.jpg" alt="Карачаевск">
+                <img class="popup__image" src="<%=require('./images/photo-grid-item-karachayevsk.jpg')%>" alt="Карачаевск">
                 <h2 class="popup__title">Карачаевск</h2>
             </div>
             <div class="popup__overlay popup__overlay_purpose_view"></div> 
@@ -74,13 +73,12 @@
     <template id="card">
         <li class="photogrid__item">
             <button class="photogrid__urn" type="button"></button>
-            <img class="photogrid__image" src="./images/photo-grid-item-karachayevsk.jpg" alt="Карачаевск">
+            <img class="photogrid__image" src="<%=require('./images/photo-grid-item-karachayevsk.jpg')%>" alt="Карачаевск">
             <div class="photogrid__sign">
                 <h2 class="photogrid__heading">Карачаевск</h2>
                 <button class="photogrid__like" type="button"></button>
             </div>
         </li>
     </template>
-    <script type="module" src="./scripts/script.js"></script>
 </body>
 </html>

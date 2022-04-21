@@ -1,4 +1,4 @@
-import { nameInput, jobInput } from './script.js';
+import { nameInput, jobInput } from '../pages/index.js';
 
 //Класс UserInfo отвечает за управление отображением информации о пользователе на странице
 export class UserInfo {

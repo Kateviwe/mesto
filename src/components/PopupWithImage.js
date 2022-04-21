@@ -1,7 +1,7 @@
 //Импорт класса Popup, который отвечает за открытие и закрытие попапов
 import { Popup } from './Popup.js';
 
-import { titleViewCard, srcViewCard } from './script.js';
+import { titleViewCard, srcViewCard } from '../pages/index.js';
 
 //Класс PopupWithImage открывает карточку и перезаписывает в нее значения из значений, указанных в ленте карточек
 export class PopupWithImage extends Popup {

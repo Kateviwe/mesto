@@ -1,4 +1,4 @@
-import { ESC_CODE } from './script.js';
+import { ESC_CODE } from '../pages/index.js';
 
 export class Popup {
     constructor(popupSelector) {

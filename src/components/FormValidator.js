@@ -1,4 +1,4 @@
-import { addingCreateButton } from './script.js';
+import { addingCreateButton } from '../pages/index.js';
 
 export class FormValidator {
     constructor(someObject, formElement) {
