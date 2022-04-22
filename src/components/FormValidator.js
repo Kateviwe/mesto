@@ -1,5 +1,3 @@
-import { addingCreateButton } from '../pages/index.js';
-
 export class FormValidator {
     constructor(someObject, formElement) {
         this._inputSelector = someObject.inputSelector;
@@ -52,8 +50,8 @@ export class FormValidator {
     }
 
     //Организация переключения состояния кнопки
-    _toggleButtonState(inputList, buttonElement) {
-        if (this._hasInvalidInput(inputList)) {
+    toggleButtonState(inputList, buttonElement, isOpened) {
+        if (this._hasInvalidInput(inputList) || isOpened) {
             buttonElement.classList.add(this._inactiveButtonClass);
             buttonElement.setAttribute('disabled', 'true');
         } else {
@@ -67,11 +65,11 @@ export class FormValidator {
         //Создание массива из всех полей (инпутов) формы
         const inputList = Array.from(this._formElement.querySelectorAll(this._inputSelector));
         const buttonElement = this._formElement.querySelector(this._submitButtonSelector);
-        this._toggleButtonState(inputList, buttonElement);
+        this.toggleButtonState(inputList, buttonElement, false);
         inputList.forEach((inputElement) => {
             inputElement.addEventListener('input', () => {
                 this._isValid(inputElement);
-                this._toggleButtonState(inputList, buttonElement);
+                this.toggleButtonState(inputList, buttonElement, false);
             });
         });
     }
@@ -84,11 +82,5 @@ export class FormValidator {
         });
 
         this._setEventListeners();
-    }
-
-    //Публичный метод блокировки кнопки отправки
-    blockButtonSubmit() {    
-        addingCreateButton.classList.add(this._inactiveButtonClass);
-        addingCreateButton.setAttribute('disabled', 'true');
     }
 }

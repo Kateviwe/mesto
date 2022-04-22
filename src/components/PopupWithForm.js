@@ -7,21 +7,21 @@ import { Popup } from './Popup.js';
 export class PopupWithForm extends Popup {
     constructor({ handleSubmitForm }, popupSelector) {
         super(popupSelector);
+        this._popupElement = document.querySelector(popupSelector);
         this._handleSubmitForm = handleSubmitForm; //Колбэк сабмита формы
-        this._form = this._popupSelector.querySelector('.popup__inner');
+        this._form = this._popupElement.querySelector('.popup__inner');
+        //Создание массива из всех полей (инпутов) формы
+        this._inputFormList = Array.from(this._form.querySelectorAll('.popup__text'));
     }
 
     _getInputValues() {
-        //Создание массива из всех полей (инпутов) формы
-        this._inputFormList = Array.from(this._form.querySelectorAll('.popup__text'));
         //Задаем пустой объект инпутов формы
-        this._formValues = {};
+        const formValues = {};
         this._inputFormList.forEach(inputElement => {
-            //Добавляем в объект this._formValues введенные значения в
-            //инпуты с ключами, которые являются их именами в разметке
-            this._formValues[inputElement.name] = inputElement.value;
+            //Добавляем в объект formValues введенные значения в инпуты с ключами, которые являются их именами в разметке
+            formValues[inputElement.name] = inputElement.value;
         });
-        return this._formValues;
+        return formValues;
     }
 
     close() {
@@ -33,8 +33,7 @@ export class PopupWithForm extends Popup {
     setEventListeners() {
         super.setEventListeners();
         //При сабмите формы происходит обработка формы в зависимости от переданного handleSubmitForm
-        this._form.addEventListener('submit', (evt) => {
-            evt.preventDefault();
+        this._form.addEventListener('submit', () => {
             this._handleSubmitForm(this._getInputValues());
             this.close();
         });

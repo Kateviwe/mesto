@@ -25,33 +25,27 @@ const object = {
   errorClass: 'popup__text-error_visible'
 };
 
-export const ESC_CODE = 'Escape';
 //Поиск кнопок и попапа в DOM
 const profileEditButton = document.querySelector('.profile__button_purpose_edit');
 const profilePopup = document.querySelector('.profile-popup');
 //Поиск кнопок и второго попапа, который добавляет изображения в ленту, в DOM
 const profileAddButton = document.querySelector('.profile__button_purpose_add');
 const addingPopup = document.querySelector('.adding-popup');
-//Поиск кнопки и попапа, который открывает просмотр карточек
-export const viewingPopup = document.querySelector('.viewing-popup');
 //Поиск форм в DOM
 const profileForm = profilePopup.querySelector('.popup__inner_purpose_edit');
 const addingForm = addingPopup.querySelector('.popup__inner_purpose_add');
 //Поиск полей форм в DOM
-export const nameInput = profilePopup.querySelector('.popup__text_purpose_name');
-export const jobInput = profilePopup.querySelector('.popup__text_purpose_characteristic');
-const titleInput = addingPopup.querySelector('.popup__text_purpose_title');
-const srcInput = addingPopup.querySelector('.popup__text_purpose_src');
-//Поиск контейнера для карточек в DOM
-const containerCard = document.querySelector('.photogrid__container');
+const nameInput = profilePopup.querySelector('.popup__text_purpose_name');
+const jobInput = profilePopup.querySelector('.popup__text_purpose_characteristic');
+//Поиск кнопок открытия попапов профиля и добавления карточек
+const editCreateButton = profilePopup.querySelector('.popup__button_purpose_edit');
+const addingCreateButton = addingPopup.querySelector('.popup__button_purpose_add');
+//Создание массива из всех полей (инпутов) формы
+const inputListEdit = Array.from(profileForm.querySelectorAll(object.inputSelector));
+const inputListAdd = Array.from(addingForm.querySelectorAll(object.inputSelector));
 
-export const addingCreateButton = addingPopup.querySelector('.popup__button_purpose_add');
-//Поиск названия карточки и её картинки у попапа в DOM
-export const titleViewCard = viewingPopup.querySelector('.popup__title');
-export const srcViewCard = viewingPopup.querySelector('.popup__image');
-
-const popupWithImage = new PopupWithImage(viewingPopup);
-const userInfo = new UserInfo({
+const popupWithImage = new PopupWithImage('.viewing-popup');
+const userInfoClass = new UserInfo({
   nameSelector: '.profile__name',
   characteristicSelector: '.profile__characteristic'
 });
@@ -68,32 +62,40 @@ function generateCard (nameCard, linkCard, selectorCard) {
 }
 
 //Добавление 6 исходных карточек
-const initialCardList = new Section({ items: initialCards, renderer: item => {
-  const initialCard = generateCard(item.name, item.link, '#card');
-  initialCardList.addItem(initialCard);
+const cardListSection = new Section({ items: initialCards, renderer: item => {
+  const card = generateCard(item.name, item.link, '#card');
+  cardListSection.addItem(card);
 } }, '.photogrid__container');
 
 //Добавляем исходные карточки с помощью класса Section
-initialCardList.renderItems();
+cardListSection.renderItems();
 
-const popupWithFormProfile = new PopupWithForm({ handleSubmitForm: () => {
-  userInfo.setUserInfo();
-}}, profilePopup);
+const popupWithFormProfile = new PopupWithForm({ handleSubmitForm: (objectFormValues) => {
+  userInfoClass.setUserInfo({
+    userName: objectFormValues.name,
+    userCharacteristic: objectFormValues.characteristic
+  });
+}}, '.profile-popup');
 
-const popupWithFormAdding = new PopupWithForm({ handleSubmitForm: () => {
-  const cardFilled = generateCard(titleInput.value, srcInput.value, '#card');
+const popupWithFormAdding = new PopupWithForm({ handleSubmitForm: (objectFormValues) => {
+
+  const cardFilled = generateCard(objectFormValues.title, objectFormValues.src, '#card');
   //Добавляем новую карточку
-  containerCard.prepend(cardFilled);
-  //Блокируем кнопку отправки
-  formAddValidation.blockButtonSubmit();
-}}, addingPopup);
+  cardListSection.addItem(cardFilled);
+}}, '.adding-popup');
 
 //Добавление слушателей событий на иконки попапов для их открытия
 profileEditButton.addEventListener('click', () => {
-  userInfo.getUserInfo();
+  const currentUserName = userInfoClass.getUserInfo().userName;
+  const currentUserCharacteristic = userInfoClass.getUserInfo().userCharacteristic;
+  nameInput.value = currentUserName;
+  jobInput.value = currentUserCharacteristic;
+
+  formEditValidation.toggleButtonState(inputListEdit, editCreateButton, true);
   popupWithFormProfile.open();
 });
 profileAddButton.addEventListener('click', () => {
+  formAddValidation.toggleButtonState(inputListAdd, addingCreateButton, true);
   popupWithFormAdding.open();
 });
 

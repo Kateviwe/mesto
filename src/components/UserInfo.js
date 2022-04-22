@@ -1,27 +1,20 @@
-import { nameInput, jobInput } from '../pages/index.js';
-
 //Класс UserInfo отвечает за управление отображением информации о пользователе на странице
 export class UserInfo {
     constructor(info) {
-        this._nameSelector = info.nameSelector;
-        this._characteristicSelector = info.characteristicSelector;
-        this._name = document.querySelector(this._nameSelector);
-        this._characteristic = document.querySelector(this._characteristicSelector);
+        this._name = document.querySelector(info.nameSelector);
+        this._characteristic = document.querySelector(info.characteristicSelector);
     }
 
     getUserInfo() {
-        nameInput.value = this._name.textContent;
-        jobInput.value = this._characteristic.textContent;
-             
-        this._userValues = {};
-        this._userValues[this._nameSelector] = nameInput.value;
-        this._userValues[this._characteristicSelector] = jobInput.value;
-
-        return this._userValues;
+        const userInfo = {
+            userName: this._name.textContent,
+            userCharacteristic: this._characteristic.textContent
+        };
+        return userInfo;
     }
 
-    setUserInfo() {
-        this._name.textContent = nameInput.value;
-        this._characteristic.textContent = jobInput.value;
+    setUserInfo(newUserInfo) {
+        this._name.textContent = newUserInfo.userName;
+        this._characteristic.textContent = newUserInfo.userCharacteristic;
     }
 }
