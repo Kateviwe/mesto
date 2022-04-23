@@ -37,12 +37,6 @@ const addingForm = addingPopup.querySelector('.popup__inner_purpose_add');
 //Поиск полей форм в DOM
 const nameInput = profilePopup.querySelector('.popup__text_purpose_name');
 const jobInput = profilePopup.querySelector('.popup__text_purpose_characteristic');
-//Поиск кнопок открытия попапов профиля и добавления карточек
-const editCreateButton = profilePopup.querySelector('.popup__button_purpose_edit');
-const addingCreateButton = addingPopup.querySelector('.popup__button_purpose_add');
-//Создание массива из всех полей (инпутов) формы
-const inputListEdit = Array.from(profileForm.querySelectorAll(object.inputSelector));
-const inputListAdd = Array.from(addingForm.querySelectorAll(object.inputSelector));
 
 const popupWithImage = new PopupWithImage('.viewing-popup');
 const userInfoClass = new UserInfo({
@@ -86,16 +80,17 @@ const popupWithFormAdding = new PopupWithForm({ handleSubmitForm: (objectFormVal
 
 //Добавление слушателей событий на иконки попапов для их открытия
 profileEditButton.addEventListener('click', () => {
-  const currentUserName = userInfoClass.getUserInfo().userName;
-  const currentUserCharacteristic = userInfoClass.getUserInfo().userCharacteristic;
+  const currentUserInfo = userInfoClass.getUserInfo();
+  const currentUserName = currentUserInfo.userName;
+  const currentUserCharacteristic = currentUserInfo.userCharacteristic;
   nameInput.value = currentUserName;
   jobInput.value = currentUserCharacteristic;
 
-  formEditValidation.toggleButtonState(inputListEdit, editCreateButton, true);
+  formEditValidation.toggleButtonState();
   popupWithFormProfile.open();
 });
 profileAddButton.addEventListener('click', () => {
-  formAddValidation.toggleButtonState(inputListAdd, addingCreateButton, true);
+  formAddValidation.toggleButtonState();
   popupWithFormAdding.open();
 });
 
