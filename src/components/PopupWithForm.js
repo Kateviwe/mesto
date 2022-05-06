@@ -35,8 +35,6 @@ export class PopupWithForm extends Popup {
         //При сабмите формы происходит обработка формы в зависимости от переданного handleSubmitForm
         this._form.addEventListener('submit', () => {
             this._handleSubmitForm(this._getInputValues());
-            this.close();
         });
-        
     }
 }

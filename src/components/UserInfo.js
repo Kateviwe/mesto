@@ -3,6 +3,7 @@ export class UserInfo {
     constructor(info) {
         this._name = document.querySelector(info.nameSelector);
         this._characteristic = document.querySelector(info.characteristicSelector);
+        this._avatar = document.querySelector(info.avatarSelector);
     }
 
     getUserInfo() {
@@ -14,7 +15,11 @@ export class UserInfo {
     }
 
     setUserInfo(newUserInfo) {
-        this._name.textContent = newUserInfo.userName;
-        this._characteristic.textContent = newUserInfo.userCharacteristic;
+        this._name.textContent = newUserInfo.name;
+        this._characteristic.textContent = newUserInfo.characteristic;
+    }
+
+    setUserAvatar(newUserAvatar) {
+        this._avatar.src = newUserAvatar.avatar;
     }
 }
