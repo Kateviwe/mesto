@@ -76,6 +76,12 @@ const popupWithConfirmCardDelete = new PopupWithConfirm({ handleSubmitDeleteCard
   deleteCardRequest(cardInfo.idCard);
 }},'.delete-confirmation-popup');
 
+//Создаем функцию для удаления карточки
+const deleteCard = (cardInfo) => {
+  popupWithConfirmCardDelete.open();
+  popupWithConfirmCardDelete.chooseDeleteCard(cardInfo);
+};
+
 //Функция создания карточки через класс Card
 function generateCard (data, nameCard, linkCard, selectorCard, userInfo) {
   const card = new Card({ name: nameCard, link: linkCard,
@@ -106,18 +112,19 @@ function generateCard (data, nameCard, linkCard, selectorCard, userInfo) {
       }
     },
     handleDeleteIconClick: (cardInfo) => {
-      popupWithConfirmCardDelete.open();
-      popupWithConfirmCardDelete.setEventListeners(cardInfo);
+      deleteCard(cardInfo);
     }
   }, selectorCard, userInfo);
   const cardElement = card.createCard(data);
   return cardElement;
 }
 
-const saveUserInfoFromServer= () => {
-  api
-  .getInfoFromServer()
-  .then((userData) => {
+//Навесим слушатели событий на попап подтверждения удаления
+popupWithConfirmCardDelete.setEventListeners();
+
+//Сначала получим данные пользователя и изначальные карточки, а после - загрузим
+Promise.all([api.getInfoFromServer(), api.getCardsFromServer()])
+  .then(([userData, data]) => {
     userInfoClass.setUserInfo({
       name: userData.name,
       characteristic: userData.about,
@@ -131,16 +138,11 @@ const saveUserInfoFromServer= () => {
       const card = generateCard(item, item.name, item.link, '#card', userData);
       cardListSection.addItem(card);
     } }, '.photogrid__container');
+
     //Получим данные по исходным карточкам с сервера
-    const cardInfoFromServer = () => {
-      api
-      .getCardsFromServer()
-      .then((data) => {
-        //Добавляем исходные карточки с помощью класса Section
-        cardListSection.renderItems(data.reverse());
-      })
-      .catch((err) => console.log(err));
-    };
+    //Добавляем исходные карточки с помощью класса Section
+    cardListSection.renderItems(data.reverse());
+
     const popupWithFormAdding = new PopupWithForm({ handleSubmitForm: (objectFormValues) => {
       buttonSubmitAddingCard.textContent = 'Сохранение...';
       //Загружаем новые карточки на сервер
@@ -165,11 +167,8 @@ const saveUserInfoFromServer= () => {
       popupWithFormAdding.open();
     });
     popupWithFormAdding.setEventListeners();
-    cardInfoFromServer();
   })
   .catch((err) => console.log(err));
-};
-saveUserInfoFromServer();
 
 const popupWithFormProfile = new PopupWithForm({ handleSubmitForm: (objectFormValues) => {
   buttonSubmitProfileInfo.textContent = 'Сохранение...';
@@ -216,11 +215,11 @@ profileEditButton.addEventListener('click', () => {
   nameInput.value = currentUserName;
   jobInput.value = currentUserCharacteristic;
 
-  formEditValidation.toggleButtonState();
+  formEditValidation.resetValidation();
   popupWithFormProfile.open();
 });
 profileAddButton.addEventListener('click', () => {
-  formAddValidation.toggleButtonState();
+  formAddValidation.resetValidation();
 });
 
 //Добавление слушателя нажатия крестика у окна просмотра картинки и слушателя нажатия
@@ -230,7 +229,7 @@ popupWithImage.setEventListeners();
 
 //Добавление слушателя события на нажатие на аватар пользователя для его редактирования
 profileAvatar.addEventListener('click', () => {
-  formchangeAvatarValidation.toggleButtonState();
+  formchangeAvatarValidation.resetValidation();
   popupWithFormProfileAvatar.open();
 });
 

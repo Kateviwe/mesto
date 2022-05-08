@@ -50,7 +50,7 @@ export class FormValidator {
     }
 
     //Организация переключения состояния кнопки
-    toggleButtonState() {
+    _toggleButtonState() {
         if (this._hasInvalidInput()) {
             this.buttonElement.classList.add(this._inactiveButtonClass);
             this.buttonElement.setAttribute('disabled', 'true');
@@ -60,16 +60,25 @@ export class FormValidator {
         }
     }
 
+    resetValidation() {
+        this._toggleButtonState(); //Управляем состоянием кнопки
+
+        //Очищаем ошибки, которые могли быть, если пользователь ввел что-то некорректное в форму и закрыл ее
+        this.inputList.forEach((inputElement) => {
+          this._hideInputError(inputElement);
+        });
+    }
+
     //Слушаем изменения инпутов, меняем состояние кнопки в зависимости от наличия/отсутствия ошибок
     _setEventListeners() {
         //Создание массива из всех полей (инпутов) формы
         this.inputList = Array.from(this._formElement.querySelectorAll(this._inputSelector));
         this.buttonElement = this._formElement.querySelector(this._submitButtonSelector);
-        this.toggleButtonState();
+        this._toggleButtonState();
         this.inputList.forEach((inputElement) => {
             inputElement.addEventListener('input', () => {
                 this._isValid(inputElement);
-                this.toggleButtonState();
+                this._toggleButtonState();
             });
         });
     }

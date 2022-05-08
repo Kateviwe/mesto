@@ -6,6 +6,7 @@ export class Card {
         this._cardSelector = cardSelector;
         //Функция, которая должна открывать попап с картинкой при клике на карточку
         this._handleCardClick = handleCardClick;
+        
         this._handleLikeClick = handleLikeClick;
         this._handleDeleteIconClick = handleDeleteIconClick;
         //Записываем данные текущего пользователя
@@ -48,6 +49,42 @@ export class Card {
         this._likeNumber.textContent = newData.likes.length;
     }
 
+    //Обработчики для карточки будем устанавливать в отдельном методе
+    _setEventListeners() {
+        //Удаляем узел DOM-дерева, который отвечает за иконку корзинки на карточке, если картинка не была создана нами
+        if(this.data.owner._id !== this._user._id) {
+            this._urnCard.remove();
+            this._urnCard = null;
+        } else {
+            //Навешиваем слушатели событий
+            //Слушатель клика по иконке урны на карточке пользователя
+            this._urnCard.addEventListener('click', () => {
+                this._handleDeleteIconClick({
+                    idCard: this.data._id,
+                    markupCard: this._element
+                });
+            });
+        }
+
+        //Слушатель клика по иконке лайка/сердечка на карточке
+        this._likeCard.addEventListener('click', () => {
+            this._handleLikeClick({
+                idCard: this.data._id,
+                likeListServer: this.data.likes
+            });
+        });
+
+        //Отслеживаем клик по изображению карточек и записываем данные из карточки в эту же карточку в 
+        //режиме просмотра (viewing)
+        this._imageCard.addEventListener('click', () => {       
+            this._handleCardClick({
+                name: this._name,
+                link: this._link,
+                alt: this._alt
+            });
+        });
+    }
+
     //Функция создания карточки
     createCard(data) {
         this.data = data;
@@ -64,41 +101,11 @@ export class Card {
         this._imageCard.src = this._link;
         this._imageCard.alt = this._alt;
 
-        //Удаляем узел DOM-дерева, который отвечает за иконку корзинки на карточке, если картинка не была создана нами
-        if(this.data.owner._id !== this._user._id) {
-            this._urnCard.remove();
-            this._urnCard = null;
-        } else {
-            //Навешиваем слушатели событий
-            //Слушатель клика по иконке урны на карточке пользователя
-            this._urnCard.addEventListener('click', () => {
-                this._handleDeleteIconClick({
-                    idCard: this.data._id,
-                    markupCard: this._element
-                });
-            });
-        }
-
         //Устанавливаем изначальное число лайков каждой карточки
         this._initialLikeCard();
 
-        //Слушатель клика по иконке лайка/сердечка на карточке
-        this._likeCard.addEventListener('click', () => {
-            this._handleLikeClick({
-                idCard: this.data._id,
-                likeListServer: this.data.likes
-            });
-        });
-                
-        //Отслеживаем клик по изображению карточек и записываем данные из карточки в эту же карточку в 
-        //режиме просмотра (viewing)
-        this._imageCard.addEventListener('click', () => {       
-            this._handleCardClick({
-                name: this._name,
-                link: this._link,
-                alt: this._alt
-            });
-        });
+        //Навесим обработчики событий для карточки (удаления, лайка, открытия)
+        this._setEventListeners();
     
         return this._element;
     }

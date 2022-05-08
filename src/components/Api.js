@@ -4,17 +4,20 @@ export class Api {
         this._url = config.url;
     }
 
+    _checkResponse(res) {
+        if (res.ok) {
+            return res.json();
+        }
+        return Promise.reject(`Произошла ошибка ${res.status}`);
+    }
+
     getInfoFromServer() {
         return fetch(`https://${this._url}/users/me`, {
             headers: {
                 authorization: '55b0d581-ee83-4eea-b2f9-f147c6af6c4a'
             }
-        }).then((res) => {
-            if (res.ok) {
-                return res.json();
-            }
-            return Promise.reject('Произошла ошибка');
-        });
+        }).then(this._checkResponse); //Передаем только ссылку на метод,
+        //так как метод сам вызовется, ведь в then надо передавать именно функцию, а не ее вызов
     }
 
     getCardsFromServer() {
@@ -22,12 +25,7 @@ export class Api {
             headers: {
                 authorization: '55b0d581-ee83-4eea-b2f9-f147c6af6c4a'
             }
-        }).then((res) => {
-            if (res.ok) {
-                return res.json();
-            }
-            return Promise.reject('Произошла ошибка');
-        });
+        }).then(this._checkResponse);
     }
     
     changeUserInfo(data) {
@@ -42,12 +40,7 @@ export class Api {
                 name: data.name,
                 about: data.characteristic
             })
-        }).then((res) => {
-            if (res.ok) {
-                return res.json();
-            }
-            return Promise.reject('Произошла ошибка');
-        });
+        }).then(this._checkResponse);
     }
 
     addNewCard(data) {
@@ -62,12 +55,7 @@ export class Api {
                 name: data.nameCard,
                 link: data.linkCard
             })
-        }).then((res) => {
-            if (res.ok) {
-                return res.json();
-            }
-            return Promise.reject('Произошла ошибка');
-        });
+        }).then(this._checkResponse);
     }
 
     deleteCard(idCard) {
@@ -77,12 +65,7 @@ export class Api {
                 authorization: '55b0d581-ee83-4eea-b2f9-f147c6af6c4a',
                 'Content-Type': 'application/json'
             }
-        }).then((res) => {
-            if (res.ok) {
-                return res.json();
-            }
-            return Promise.reject('Произошла ошибка');
-        });
+        }).then(this._checkResponse);
     }
 
     putLikeCard(idCard) {
@@ -92,12 +75,7 @@ export class Api {
                 authorization: '55b0d581-ee83-4eea-b2f9-f147c6af6c4a',
                 'Content-Type': 'application/json'
             }
-        }).then((res) => {
-            if (res.ok) {
-                return res.json();
-            }
-            return Promise.reject('Произошла ошибка');
-        });
+        }).then(this._checkResponse);
     }
 
     deleteLikeCard(idCard) {
@@ -107,12 +85,7 @@ export class Api {
                 authorization: '55b0d581-ee83-4eea-b2f9-f147c6af6c4a',
                 'Content-Type': 'application/json'
             }
-        }).then((res) => {
-            if (res.ok) {
-                return res.json();
-            }
-            return Promise.reject('Произошла ошибка');
-        });
+        }).then(this._checkResponse);
     }
 
     changeUserAvatar(data) {
@@ -126,11 +99,6 @@ export class Api {
             body: JSON.stringify({
                 avatar: data.avatar
             })
-        }).then((res) => {
-            if (res.ok) {
-                return res.json();
-            }
-            return Promise.reject('Произошла ошибка');
-        });
+        }).then(this._checkResponse);
     }
 }

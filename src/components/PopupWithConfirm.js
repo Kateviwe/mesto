@@ -12,13 +12,17 @@ export class PopupWithConfirm extends Popup {
         this._putSubmit = this._putSubmit.bind(this);
     }
 
+    chooseDeleteCard(cardInfo) {
+        //Запишем данные карточки, на иконку удаления которой нажали
+        this._cardInfo = cardInfo;
+    }
+
     _putSubmit(evt) {
         evt.preventDefault();
         this._handleSubmitDeleteCard(this._cardInfo);
     }
 
-    setEventListeners(cardInfo) {
-        this._cardInfo = cardInfo;
+    setEventListeners() {
         super.setEventListeners();
         this._button.addEventListener('click', this._putSubmit);   
     }
